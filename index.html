@@ -323,5 +323,42 @@
   </footer>
 
   <script src="script.js"></script>
+
+  <script>
+    (() => {
+      const detail = document.getElementById('rise-detail');
+      const tabs = document.querySelectorAll('.rise-tab');
+
+      const updatedStages = {
+        stewardship: `
+          <p class="rise-stage-label">Stewardship Accountability</p>
+          <h3>I take ownership of the work and environment, contribute meaningfully, and help create lasting impact.</h3>
+          <p>People are trusted to own the work, not just complete it, moving from passive participation to active stewardship of the team’s outcomes, culture, and collective well-being.</p>
+          <ul>
+            <li>Team members freely contribute their specialized skills, ideas, and judgment to shape meaningful outcomes.</li>
+            <li>Individuals take full responsibility for the quality and care of the work.</li>
+            <li>People view themselves as trustees of the team's health, resources, psychological well-being, and decision-making authority.</li>
+          </ul>
+        `,
+        evolution: `
+          <p class="rise-stage-label">Evolutionary Agency</p>
+          <h3>I can co-create improvement and help the system evolve.</h3>
+          <p>People feel safe to challenge the present in order to improve the future — not simply by raising concerns, but by helping shape better systems, decisions, and ways of working.</p>
+          <ul>
+            <li>Constructive dissent becomes a source of progress.</li>
+            <li>Ideas can be critiqued without attacking people.</li>
+            <li>Feedback is acted upon, integrated into learning, or explained transparently.</li>
+          </ul>
+        `
+      };
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const stage = tab.dataset.stage;
+          if (updatedStages[stage]) detail.innerHTML = updatedStages[stage];
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
