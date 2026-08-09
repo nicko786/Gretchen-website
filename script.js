@@ -1,4 +1,40 @@
 const header=document.querySelector(".site-header"),menuButton=document.querySelector(".menu-toggle"),nav=document.querySelector(".primary-nav");window.addEventListener("scroll",()=>header.classList.toggle("scrolled",window.scrollY>18));menuButton.addEventListener("click",()=>{const e="true"===menuButton.getAttribute("aria-expanded");menuButton.setAttribute("aria-expanded",String(!e));nav.classList.toggle("open")});nav.querySelectorAll("a").forEach(e=>e.addEventListener("click",()=>{nav.classList.remove("open");menuButton.setAttribute("aria-expanded","false")}));const observer=new IntersectionObserver(e=>e.forEach(e=>{e.isIntersecting&&(e.target.classList.add("visible"),observer.unobserve(e.target))}),{threshold:.12});document.querySelectorAll(".reveal").forEach(e=>observer.observe(e));
-const riseStages={recognition:{label:"Recognition Baseline",title:"I am seen, respected, and valued here.",intro:"People feel safe to be themselves before they are expected to perform.",points:["Belong without first proving worth.","Feel acknowledged as human beings, not only as outputs.","Experience respect for identity, strengths, and perspective."]},inquiry:{label:"Inquiry Freedom",title:"I can ask, learn, and admit what I do not know.",intro:"People feel safe to learn out loud.",points:["Curiosity is welcomed and questions are normalized.","Mistakes are treated as information rather than personal failure.","Feedback supports learning instead of triggering blame."]},stewardship:{label:"Stewardship Accountability",title:"I can contribute, take ownership, and make a meaningful impact.",intro:"People feel trusted to own the work, not just complete the work.",points:["Responsibility is distributed rather than tightly controlled.","People are invited into decisions before they are finalized.","Team members proactively shape outcomes without waiting to be asked."]},evolution:{label:"Evolutionary Agency",title:"I can challenge, improve, and help the system change.",intro:"People feel safe to challenge the present in order to improve the future.",points:["Constructive dissent becomes a source of progress.","Ideas can be critiqued without attacking people.","Feedback is acted upon, or decisions are explained transparently."]}};
-const tabs=document.querySelectorAll(".rise-tab"),detail=document.getElementById("rise-detail");function showStage(e){const t=riseStages[e];detail.innerHTML=`<p class="rise-stage-label">${t.label}</p><h3>${t.title}</h3><p>${t.intro}</p><ul>${t.points.map(e=>`<li>${e}</li>`).join("")}</ul>`,tabs.forEach(t=>{const i=t.dataset.stage===e;t.classList.toggle("active",i),t.setAttribute("aria-pressed",String(i))})}tabs.forEach(e=>{e.addEventListener("mouseenter",()=>showStage(e.dataset.stage)),e.addEventListener("focus",()=>showStage(e.dataset.stage)),e.addEventListener("click",()=>showStage(e.dataset.stage))});
+const riseStages={
+recognition:{
+label:"Recognition Baseline",
+title:"I am seen, respected, and valued here.",
+intro:"People feel safe to be themselves before they are expected to perform.",
+points:[
+"Belong without first proving worth.",
+"Feel acknowledged as human beings, not only as outputs.",
+"Experience respect for identity, strengths, and perspective."
+]},
+inquiry:{
+label:"Inquiry Freedom",
+title:"I can ask, learn, and admit what I do not know.",
+intro:"People feel safe to learn out loud.",
+points:[
+"Curiosity is welcomed and questions are normalized.",
+"Mistakes are treated as information rather than personal failure.",
+"Feedback supports learning instead of triggering blame."
+]},
+stewardship:{
+label:"Stewardship Accountability",
+title:"I take ownership of the work and environment, contribute meaningfully, and help create lasting impact.",
+intro:"People are trusted to own the work, not just complete it, moving from passive participation to active stewardship of the team’s outcomes, culture, and collective well-being.",
+points:[
+"Team members freely contribute their specialized skills, ideas, and judgment to shape meaningful outcomes.",
+"Individuals take full responsibility for the quality and care of the work.",
+"People view themselves as trustees of the team's health, resources, psychological well-being, and decision-making authority."
+]},
+evolution:{
+label:"Evolutionary Agency",
+title:"I can co-create improvement and help the system evolve.",
+intro:"People feel safe to challenge the present in order to improve the future — not simply by raising concerns, but by helping shape better systems, decisions, and ways of working.",
+points:[
+"Constructive dissent becomes a source of progress.",
+"Ideas can be critiqued without attacking people.",
+"Feedback is acted upon, integrated into learning, or explained transparently."
+]}
+};const tabs=document.querySelectorAll(".rise-tab"),detail=document.getElementById("rise-detail");function showStage(e){const t=riseStages[e];detail.innerHTML=`<p class="rise-stage-label">${t.label}</p><h3>${t.title}</h3><p>${t.intro}</p><ul>${t.points.map(e=>`<li>${e}</li>`).join("")}</ul>`,tabs.forEach(t=>{const i=t.dataset.stage===e;t.classList.toggle("active",i),t.setAttribute("aria-pressed",String(i))})}tabs.forEach(e=>{e.addEventListener("mouseenter",()=>showStage(e.dataset.stage)),e.addEventListener("focus",()=>showStage(e.dataset.stage)),e.addEventListener("click",()=>showStage(e.dataset.stage))});
 const quizInputs=[...document.querySelectorAll('.quiz-question input[type="radio"]')],progressBar=document.getElementById("quiz-progress-bar"),calculateButton=document.getElementById("calculate-score"),resetButton=document.getElementById("reset-quiz"),result=document.getElementById("quiz-result"),scoreValue=document.getElementById("score-value"),resultTitle=document.getElementById("result-title"),resultCopy=document.getElementById("result-copy");function selectedAnswers(){return["q1","q2","q3","q4"].map(e=>document.querySelector(`input[name="${e}"]:checked`)).filter(Boolean)}function updateProgress(){progressBar.style.width=`${25*selectedAnswers().length}%`}quizInputs.forEach(e=>e.addEventListener("change",updateProgress));calculateButton.addEventListener("click",()=>{const e=selectedAnswers();if(e.length<4)return result.hidden=!1,scoreValue.textContent=e.reduce((e,t)=>e+Number(t.value),0),resultTitle.textContent="Complete all four questions",resultCopy.textContent="Choose one rating for every RISE stage before calculating your final result.",void result.scrollIntoView({behavior:"smooth",block:"nearest"});const t=e.reduce((e,t)=>e+Number(t.value),0);let i="",n="";t<=8?(i="The Floor",n="Your organization may be stalled at the baseline survival layer. Focus first on Recognition behaviors that help people feel seen, respected, and humanized."):t<=13?(i="The Learning Loop",n="Your team feels safe enough to ask questions and learn, but may lack the shared ownership needed to create broader structural impact."):t<=17?(i="The Steward Tier",n="Your team has cultivated trust, collaborative custody, and shared ownership. You are positioned to unlock more systemic innovation."):(i="The Evolutionary Zone",n="Your culture is becoming self-correcting and highly innovative. People are actively helping build the future of the organization."),scoreValue.textContent=t,resultTitle.textContent=i,resultCopy.textContent=n,result.hidden=!1,result.scrollIntoView({behavior:"smooth",block:"nearest"})});resetButton.addEventListener("click",()=>{quizInputs.forEach(e=>e.checked=!1),progressBar.style.width="0%",result.hidden=!0});document.getElementById("year").textContent=(new Date).getFullYear();
