@@ -20,7 +20,7 @@ points:[
 ]},
 stewardship:{
 label:"Stewardship Accountability",
-title:"I take ownership of the work and environment, contribute meaningfully, and help create lasting impact.",
+title:"I hold shared ownership of the work and environment.",
 intro:"People are trusted to own the work, not just complete it, moving from passive participation to active stewardship of the team’s outcomes, culture, and collective well-being.",
 points:[
 "Team members freely contribute their specialized skills, ideas, and judgment to shape meaningful outcomes.",
