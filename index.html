@@ -322,15 +322,29 @@
     <p class="copyright">© <span id="year"></span> Gretchen O'Hair. All rights reserved.</p>
   </footer>
 
-  <script src="script.js"></script>
 
   <script>
-    (() => {
-      const detail = document.getElementById('rise-detail');
-      const tabs = document.querySelectorAll('.rise-tab');
+    document.addEventListener('click', function (event) {
+      const tab = event.target.closest('.rise-tab');
+      if (!tab) return;
 
-      const updatedStages = {
-        stewardship: `
+      const stage = tab.dataset.stage;
+      if (stage !== 'stewardship' && stage !== 'evolution') return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+
+      document.querySelectorAll('.rise-tab').forEach(function (t) {
+        const active = t === tab;
+        t.classList.toggle('active', active);
+        t.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+
+      const detail = document.getElementById('rise-detail');
+
+      if (stage === 'stewardship') {
+        detail.innerHTML = `
           <p class="rise-stage-label">Stewardship Accountability</p>
           <h3>I take ownership of the work and environment, contribute meaningfully, and help create lasting impact.</h3>
           <p>People are trusted to own the work, not just complete it, moving from passive participation to active stewardship of the team’s outcomes, culture, and collective well-being.</p>
@@ -339,8 +353,11 @@
             <li>Individuals take full responsibility for the quality and care of the work.</li>
             <li>People view themselves as trustees of the team's health, resources, psychological well-being, and decision-making authority.</li>
           </ul>
-        `,
-        evolution: `
+        `;
+      }
+
+      if (stage === 'evolution') {
+        detail.innerHTML = `
           <p class="rise-stage-label">Evolutionary Agency</p>
           <h3>I can co-create improvement and help the system evolve.</h3>
           <p>People feel safe to challenge the present in order to improve the future — not simply by raising concerns, but by helping shape better systems, decisions, and ways of working.</p>
@@ -349,16 +366,11 @@
             <li>Ideas can be critiqued without attacking people.</li>
             <li>Feedback is acted upon, integrated into learning, or explained transparently.</li>
           </ul>
-        `
-      };
-
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          const stage = tab.dataset.stage;
-          if (updatedStages[stage]) detail.innerHTML = updatedStages[stage];
-        });
-      });
-    })();
+        `;
+      }
+    }, true);
   </script>
+
+  <script src="script.js"></script>
 </body>
 </html>
