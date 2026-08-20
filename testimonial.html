@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Submit a testimonial for Gretchen O'Hair." />
+  <title>Submit a Testimonial | Gretchen O'Hair</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header scrolled">
+    <a class="brand" href="index.html#top" aria-label="Gretchen O'Hair home">
+      <svg class="brand-mark" viewBox="0 0 120 84" aria-hidden="true">
+        <path d="M13 20 49 55 31 69 55 63 74 79 72 56 94 25 68 49 60 43 55 63 49 55 46 17 60 43 90 12 68 49 94 25 110 39 97 34" />
+      </svg>
+      <span>Gretchen O'Hair</span>
+    </a>
+  </header>
+  <main id="main">
+    <section class="contact section" style="padding-top:9rem;">
+      <div class="contact-panel reveal visible">
+        <div>
+          <p class="eyebrow">Share Your Experience</p>
+          <h1>Submit a testimonial.</h1>
+          <p>If Gretchen’s presentation, workshop, or work made an impact, she’d be grateful to hear about your experience.</p>
+        </div>
+        <form class="contact-form" action="https://formspree.io/f/xqpznbqq" method="POST">
+          <label>Name<input type="text" name="name" required /></label>
+          <label>Title / Role<input type="text" name="title" /></label>
+          <label>Organization<input type="text" name="organization" /></label>
+          <label>Email<input type="email" name="email" required /></label>
+          <label>Your testimonial<textarea name="testimonial" rows="7" required></textarea></label>
+          <button class="button button-primary" type="submit">Submit Testimonial</button>
+          <p class="form-note">Thank you for sharing your experience.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div>
+      <a class="brand footer-brand" href="index.html#top"><span>Gretchen O'Hair</span></a>
+      <p>Creating psychologically safe workplaces where people and ideas thrive.</p>
+    </div>
+    <p class="copyright">© <span id="year"></span> Gretchen O'Hair. All rights reserved.</p>
+  </footer>
+  <script>document.getElementById("year").textContent=(new Date).getFullYear();</script>
+</body>
+</html>

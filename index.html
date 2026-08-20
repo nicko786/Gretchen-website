@@ -10,6 +10,24 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    .testimonial-carousel{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:1rem;max-width:980px;margin:0 auto}
+    .testimonial-track{position:relative}
+    .testimonial-slide{display:none;text-align:center}
+    .testimonial-slide.active{display:block}
+    .testimonial-slide blockquote{margin:0 0 1.25rem}
+    .testimonial-slide p{margin:0;font-weight:700}
+    .testimonial-arrow{width:42px;height:42px;border:1px solid rgba(17,57,87,.25);border-radius:50%;background:transparent;color:inherit;font:inherit;font-size:2rem;line-height:1;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:transform .2s ease,background .2s ease}
+    .testimonial-arrow:hover,.testimonial-arrow:focus-visible{transform:scale(1.06);background:rgba(17,57,87,.06)}
+    .testimonial-dots{display:flex;justify-content:center;gap:.5rem;margin-top:1.25rem}
+    .testimonial-dot{width:8px;height:8px;border:0;border-radius:50%;padding:0;background:rgba(17,57,87,.28);cursor:pointer}
+    .testimonial-dot.active{background:#113957;transform:scale(1.25)}
+    .testimonial-submit{text-align:center;margin-top:1rem}
+    .testimonial-submit a{font-weight:700;text-decoration:underline;text-underline-offset:3px}
+    @media (max-width:640px){.testimonial-carousel{grid-template-columns:34px minmax(0,1fr) 34px;gap:.5rem}.testimonial-arrow{width:34px;height:34px;font-size:1.6rem}}
+  </style>
+
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -279,11 +297,37 @@
         <p class="eyebrow">Testimonials</p>
         <h2>What audiences and organizers are saying.</h2>
       </div>
-      <div class="testimonial-placeholder reveal">
-        <blockquote>“As her sibling—and someone who’s witnessed her resilience firsthand—I can say with certainty: Gretchen doesn’t just talk about the power of failure—she lives it, learns from it, and transforms it into leadership gold. Her ‘Success of Failure’ presentation is more than compelling—it’s deeply human. Through her candid personal story and the elegant RISE model (Recognition, Inquiry, Stewardship, Evolution), she turns vulnerability into vision and uncertainty into clarity. She doesn’t just teach leaders how to grow—she shows them how to create a culture of belonging first, so they can innovate with purpose and lead with authenticity.
-”</blockquote>
-        <p>— Angie Gudaitis, Territory Business Leader, Rockwell Automation</p>
+
+      <div class="testimonial-carousel reveal" aria-roledescription="carousel" aria-label="Testimonials">
+        <button class="testimonial-arrow testimonial-prev" type="button" aria-label="Previous testimonial">‹</button>
+
+        <div class="testimonial-track">
+          <article class="testimonial-slide active" aria-hidden="false">
+            <blockquote>
+              “As her sibling—and someone who’s witnessed her resilience firsthand—I can say with certainty: Gretchen doesn’t just talk about the power of failure—she lives it, learns from it, and transforms it into leadership gold. Her ‘Success of Failure’ presentation is more than compelling—it’s deeply human. Through her candid personal story and the elegant RISE model (Recognition, Inquiry, Stewardship, Evolution), she turns vulnerability into vision and uncertainty into clarity. She doesn’t just teach leaders how to grow—she shows them how to create a culture of belonging first, so they can innovate with purpose and lead with authenticity.”
+            </blockquote>
+            <p>— Angie Gudaitis, Territory Business Leader, Rockwell Automation</p>
+          </article>
+
+          <article class="testimonial-slide" aria-hidden="true">
+            <blockquote>
+              “Gretchen is a wonderfully engaging speaker. Her use of humor and personal stories pulled me in and made it easy to remember the substance of her presentation. I have worked as an employee and an employer, it's clear to me that her RISE Model is a great asset for any organization looking reverse or prevent quiet quitting in the workplace.”
+            </blockquote>
+            <p>— Nadirah Hope, Certified Life Coach</p>
+          </article>
+        </div>
+
+        <button class="testimonial-arrow testimonial-next" type="button" aria-label="Next testimonial">›</button>
       </div>
+
+      <div class="testimonial-dots reveal" aria-label="Choose testimonial">
+        <button class="testimonial-dot active" type="button" aria-label="Show testimonial 1" aria-pressed="true"></button>
+        <button class="testimonial-dot" type="button" aria-label="Show testimonial 2" aria-pressed="false"></button>
+      </div>
+
+      <p class="testimonial-submit reveal">
+        <a href="testimonial.html">Submit a testimonial</a>
+      </p>
     </section>
 
     <section id="contact" class="contact section">
@@ -370,6 +414,34 @@
         `;
       }
     }, true);
+  </script>
+
+
+  <script>
+    (() => {
+      const slides=[...document.querySelectorAll('.testimonial-slide')];
+      const dots=[...document.querySelectorAll('.testimonial-dot')];
+      const prev=document.querySelector('.testimonial-prev');
+      const next=document.querySelector('.testimonial-next');
+      if(!slides.length||!prev||!next)return;
+      let current=0;
+      function showTestimonial(index){
+        current=(index+slides.length)%slides.length;
+        slides.forEach((slide,i)=>{
+          const active=i===current;
+          slide.classList.toggle('active',active);
+          slide.setAttribute('aria-hidden',active?'false':'true');
+        });
+        dots.forEach((dot,i)=>{
+          const active=i===current;
+          dot.classList.toggle('active',active);
+          dot.setAttribute('aria-pressed',active?'true':'false');
+        });
+      }
+      prev.addEventListener('click',()=>showTestimonial(current-1));
+      next.addEventListener('click',()=>showTestimonial(current+1));
+      dots.forEach((dot,i)=>dot.addEventListener('click',()=>showTestimonial(i)));
+    })();
   </script>
 
   <script src="script.js"></script>
